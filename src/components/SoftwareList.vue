@@ -142,7 +142,7 @@ export default {
             console.log("private self", self, "private this", this);
             var xhr = new XMLHttpRequest();
               
-            xhr.open('GET', self.server.private_ip + "/application?id=" + mySoft.id);
+            xhr.open('GET', "http://"+ self.server.private_ip + ":8080/application?id=" + mySoft.id);
             xhr.onload = function() {
               console.log(JSON.parse(xhr.responseText));
             }
