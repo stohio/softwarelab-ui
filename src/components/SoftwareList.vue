@@ -134,13 +134,14 @@ export default {
 
     downloadFile(software) {
       console.log("download", software);
+      var self = this;
       this.fetchServerList(
           function() {
 
             console.log("private", this.server.private_ip);
             var xhr = new XMLHttpRequest();
-            var self = this;
-            xhr.open('GET', this.server.ip + "/application?id=" + software.id);
+            
+            xhr.open('GET', self.server.ip + "/application?id=" + software.id);
             xhr.onload = function() {
               console.log(JSON.parse(xhr.responseText));
             }
