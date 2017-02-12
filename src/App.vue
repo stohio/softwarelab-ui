@@ -72,10 +72,10 @@
   	font-size: 2rem;
 
   	span:first-of-type {
-  		color: $blue;
+  		color: $yellow;
   	}
   	span:nth-of-type(2) {
-  		color: $blue;
+  		color: $yellow;
   	}
   	span:nth-of-type(3) {
   		color: $orange;

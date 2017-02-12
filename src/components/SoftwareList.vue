@@ -16,7 +16,7 @@
               <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               width="42px" height="32px" viewBox="0 0 42 32" enable-background="new 0 0 42 32" xml:space="preserve">
               <defs>
-                <linearGradient id="rp-gradient" gradientTransform="rotate(60)">
+                <linearGradient id="soft-gradient" gradientTransform="rotate(60)">
                   <stop offset="0%" stop-color="#d11d29"></stop>
                   <stop offset="100%" stop-color="#542437"></stop>
                 </linearGradient>
@@ -276,15 +276,11 @@ h3 {
 
   position: relative;
 
-  svg {
-    
-    fill: url(#rp-gradient);
-  }
-
   .info {
     position: absolute;
     right: 40px;
-    top: 30%;
+    top: 10px;
+    padding: 10px 0;
 
     display: flex;
     justify-content: row-end;
@@ -295,7 +291,12 @@ h3 {
     color: #000;
 
     margin-left: 20px;
-    transition: 0.3s color ease;
+    transition: 0.2s color ease;
+  }
+
+  svg {
+    fill: #000;
+    transition: 0.2s fill ease;
   }
 
   lineargradient {
@@ -315,6 +316,10 @@ h3 {
     color: #f6c435; 
   }
 
+
+  svg {
+    fill: #f6c435;
+  }
   lineargradient {
     stop:first-of-type {
       stop-color: #3a5255;
