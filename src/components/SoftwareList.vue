@@ -3,23 +3,23 @@
   <div id="list-container">
     <ul 
     class="server-list">
-      <li v-for="server in servers" class="server">
+      <li class="server">
         <div class="flex-container">
           <h3>Available Software {{ searchString }}</h3>
           <input v-model="searchString" type="text" placeholder="Search..." class="big-input"><span class="big-input-line"></span>
         </div>
         <ul class="software-list">
-          <a href="#" v-for="software in searchFilter(server.software)">
+          <div v-for="software in searchFilter(server.software)" v-on:click="downloadFile(software)">
             <li class="software-card">
               <img src=""/>
               <h4>{{ software.clean_name }}</h4>
               <p></p>
             </li>
-          </a>
+          </div>
         </ul>
         <div class="server-info">
           <h2>{{ server.name }} Server</h2>
-          <p>{{ server.private_ip }}</p>
+          <p>{{ server.ip }}</p>
         </div>
       </li>
     </ul>
@@ -37,14 +37,14 @@ export default {
   name: 'software-list',
   data () {
     return {
-      apiUrl:  "http://10.2.0.252:8080",
+      apiUrl:  "http://40.71.25.155:8080",
       searchString: '',
       showSoftwareList: false,
-      servers: [{
+      server: {
         name: "Brick Hack",
-        private_ip: "192.168.1.10",
-        software: [{"clean_name": "Android Studio", "id" : 1, "name": "android-studio-ide-145.3360264-linux.zip"}, {"clean_name": "JRE 1.8", "id":2 ,"name": "jre-8u121-linux-i586.tar.gz"} , {"clean_name": "Postman", "id":3 ,"name":"Postman-linux-x64-4.9.3.tar.gz"} , {"clean_name": "AuthPy", "id":4 ,"name":"authy-authy-python-f085687.zip"} , {"clean_name": "MonoDevelop", "id":5 ,"name":"monodevelop-6.1.2.44-1.flatpak"} , {"clean_name": "SimpleSMS", "id":6,"name":"simpleSMS-master.zip"} , {"clean_name": "Ngrok x64", "id":7 ,"name":"ngrok-stable-linux-amd64.zip"} , {"clean_name": "Java OCR", "id":8 ,"name":"javaocr-20100605.zip"} , {"clean_name": "JDK 1.8", "id":9 ,"name":"jdk-8u121-linux-i586.tar.gz"} ]
-      }]
+        ip: "192.168.1.10",
+        software: [{"clean_name": "Android Studio", "id" : 1, "name": "android-studio-ide-145.3360264-linux.zip"}, {"clean_name": "JRE 1.8", "id":2 ,"name": "jre-8u121-linux-i586.tar.gz"} , {"clean_name": "Postman", "id":3 ,"name":"Postman-linux-x64-4.9.3.tar.gz"} , {"clean_name": "AuthPy", "id":4 ,"name":"authy-authy-python-f085687.zip"} , {"clean_name": "MonoDevelop", "id":5 ,"name":"monodevelop-6.1.2.44-1.flatpak"} , {"clean_name": "SimpleSMS", "id":6,"name":"simpleSMS-master.zip"} , {"clean_name": "Ngrok x64", "id":7 ,"name":"ngrok-stable-linux-amd64.zip"} , {"clean_name": "Java OCR", "id":8 ,"name":"javaocr-20100605.zip"} , {"clean_name": "JDK 1.8", "id":9 ,"name":"jdk-8u121-linux-i586.tar.gz"}, {"clean_name": "Android Bundle", "id":10 ,"name":"android_bundle.zip"}]
+      }
     }
   },
 
@@ -55,9 +55,9 @@ export default {
     fetchServerList () {
       var xhr = new XMLHttpRequest();
         var self = this;
-        xhr.open('GET', this.apiUrl + "/server");
+        xhr.open('GET', this.apiUrl + "/get_ip");
         xhr.onload = function() {
-          self.servers = JSON.parse(xhr.responseText);
+          self.server.ip = xhr.responseText;
         }
         xhr.send();
     },
@@ -86,6 +86,19 @@ export default {
         return 0;
       })
     },
+
+    downloadFile(software) {
+      console.log("download", software);
+
+      var xhr = new XMLHttpRequest();
+        var self = this;
+        xhr.open('GET', this.apiUrl + "/application?id=" + software.id);
+        xhr.onload = function() {
+          self.servers = JSON.parse(xhr.responseText);
+        }
+        xhr.send();
+
+    }
 
 
   }
