@@ -1,7 +1,6 @@
 <template>
 
   <div id="list-container">
-    <h1>{{ msg }}</h1>
     <ul class="server-list">
       <li v-for="server in servers" class="server">
         <h2>{{ server.name }} Server</h2>
@@ -29,7 +28,6 @@ export default {
   name: 'software-list',
   data () {
     return {
-      msg: 'The Software Lab',
       apiUrl:  "http://10.2.0.252:8080",
       servers: [{
         name: "Brick Hack",
@@ -63,7 +61,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ddd5bf;
   margin-top: 60px;
 
   width: 100%;
