@@ -66,7 +66,7 @@ export default {
     fetchServerList () {
       var xhr = new XMLHttpRequest();
         var self = this;
-        xhr.open('GET', this.apiUrl + "/get_ip");
+        xhr.open('GET', "http://" + this.apiUrl + "/get_ip");
         xhr.onload = function() {
           self.server.ip = xhr.responseText;
         }
@@ -76,7 +76,7 @@ export default {
     fetchAppList () {
       var xhr = new XMLHttpRequest();
         var self = this;
-        xhr.open('GET', this.apiUrl + "/apps");
+        xhr.open('GET', "http://" + this.apiUrl + "/apps");
         xhr.onload = function() {
           self.server.software = JSON.parse(xhr.responseText);
         }
@@ -134,7 +134,7 @@ export default {
 
       var xhr = new XMLHttpRequest();
         var self = this;
-        xhr.open('GET', this.server.ip + "/application?id=" + software.id);
+        xhr.open('GET', "http://" + this.server.ip + "/application?id=" + software.id);
         xhr.onload = function() {
           self.servers = JSON.parse(xhr.responseText);
         }
