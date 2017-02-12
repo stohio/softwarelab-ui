@@ -5,7 +5,7 @@
     class="server-list">
       <li class="server">
         <div class="flex-container" v-bind:class="{hidden: expandList === false}">
-          <h3>Available Software {{ searchString }}</h3>
+          <h3>Available Software</h3>
           <input v-model="searchString" type="text" placeholder="Search..." class="big-input"><span class="big-input-line"></span>
         </div>
         <ul class="software-list" v-bind:class="{hidden: expandList === false}">
@@ -62,6 +62,13 @@ export default {
   mounted () {
 
   },
+
+  watch: {
+    openTab: function (val, oldVal) {
+      this.expandList = true;
+    }
+  },
+
   methods: {
     fetchServerList (callback) {
       var xhr = new XMLHttpRequest();
@@ -142,7 +149,7 @@ export default {
             console.log("private self", self, "private this", this);
               
             window.location.href = "http://"+ self.server.private_ip + ":8080/application?id=" + mySoft.id;
-            
+
           }
       );
     },
