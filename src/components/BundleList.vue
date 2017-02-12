@@ -112,24 +112,28 @@ export default {
   data () {
     return {
       msg: 'The Software Lab',
-      openTab: ''
     }
   },
 
+  props: ['openTab'],
 
-  mounted () {
-
+  mounted() {
+    
   },
+
   methods: {
     toggleActive: function(name) {
+
       if (this.openTab === name) {
         var el = document.querySelector('.active')
         console.log(el);
         el.classList.remove('active');
         setTimeout(function () { this.openTab = '' }.bind(this), 600)
+        this.$emit('changeBundle', '');
 
       } else {
         this.openTab = name;
+        this.$emit('changeBundle', name);
       }
     }
   }

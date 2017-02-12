@@ -1,8 +1,8 @@
 <template>
   <div id="app">
   	<h1 class="logo">The Software Lab</h1>
-  	<bundle-list></bundle-list>
-    <software-list></software-list>
+  	<bundle-list v-on:changeBundle="changeBundle" :openTab="openTab"></bundle-list>
+    <software-list v-on:changeBundle="changeBundle" :openTab="openTab"></software-list>
   </div>
 </template>
 
@@ -111,6 +111,18 @@ export default {
   components: {
     SoftwareList,
     BundleList
+  },
+
+  data () {
+  	return {
+  		openTab: ''
+  	}
+  },
+
+  methods: {
+    changeBundle: function (name) {
+      this.openTab = name;
+    }
   }
 }
 </script>
