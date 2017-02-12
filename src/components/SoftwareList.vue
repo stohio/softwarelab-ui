@@ -140,13 +140,9 @@ export default {
           function() {
 
             console.log("private self", self, "private this", this);
-            var xhr = new XMLHttpRequest();
               
-            xhr.open('GET', "http://"+ self.server.private_ip + ":8080/application?id=" + mySoft.id);
-            xhr.onload = function() {
-              console.log(JSON.parse(xhr.responseText));
-            }
-            xhr.send();
+            window.location.href = "http://"+ self.server.private_ip + ":8080/application?id=" + mySoft.id;
+            
           }
       );
     },
