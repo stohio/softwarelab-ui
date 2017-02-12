@@ -2,7 +2,7 @@
 
   <div id="bundle-container">
     <h1>I want to build...</h1>
-    <ul>
+    <ul v-bind:class="{active: (openTab != '')}">
       <li 
         v-on:click="toggleActive('mobile')"
         v-bind:class="{active: (openTab === 'mobile'), hidden: (openTab != '' && openTab != 'mobile')}"
@@ -162,7 +162,15 @@ export default {
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: row-end;
+    max-height: auto;
+    height: auto;
+  }
+
+  ul.active {
+    transition: 0.5s height ease;
+    max-height: 280px;
+    height: 280px;
   }
 }
 
@@ -204,39 +212,58 @@ export default {
 .bundle-card.active {
   width: 100%;
 
-  transition: 0.5s width ease 0.6s;
-
+  //transition: 1s width ease 4s;
+  flex-grow: 1;
+  transition: 0.5s flex-grow ease 0.5s, 0.5s width ease 0.5s;
 }
 
 .bundle-card.hidden {
-  animation: 0.8s hide-card ease;
+  animation: 0.5ss hide-card linear;
   animation-fill-mode: both;
+
+  flex-shrink: 1;
+
+  max-height: 0;
+  height: 0;
+
+  transition: 0.5s max-height ease 0.5s, 0.5s height ease 0.5s, 0.5s min-height ease 0.5s, max-width ease;
 }
 
 
 @keyframes hide-card {
   0% {
     opacity: 1;
-    min-height: 280px;
-    padding: 20px 40px;
-    max-width: 100%;
+    max-height: 100%;
   }
+
+
   50% {
     opacity: 0;
-    min-height: 0px;
+    min-height: 0;
     max-height: 0px;
-    padding: 0 40px;
+    padding: 0;
     margin: 0;
-    max-width: 100%;
+    // min-height: 0;
+    // max-height: 0;
+    // padding: 0;
+    // margin: 0;
+    // max-width: 1px;
+    // width: 1px;
+    // min-width: 1px;
   }
 
   100% {
-    opacity: 0;
-    min-height: 0;
-    max-height: 0;
+    min-width: 0;
+    max-width: 0px;
     padding: 0;
     margin: 0;
-    max-width: 1;
+    // min-height: 0;
+    // max-height: 0;
+    // padding: 0;
+    // margin: 0;
+    // max-width: 1px;
+    // width: 1px;
+    // min-width: 1px;
   }
 }
 
@@ -259,7 +286,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.16);
 
-  transition: 0.5s width ease, 0.3s opacity ease, 0.3s max-height ease, 0.3s height ease, 0.3s min-height ease, 0.3s max-width ease,;
+  transition: 0.5s max-height ease 0.5s, 0.5s height ease 0.5s, 0.5s min-height ease 0.5s, max-width ease;
 
   &:hover, &.active {
     

@@ -11,9 +11,30 @@
         <ul class="software-list" v-bind:class="{hidden: expandList === false}">
           <div v-for="software in bundleFilter(searchFilter(server.software))" v-on:click="downloadFile(software)">
             <li class="software-card">
-              <img src=""/>
               <h4>{{ software.clean_name }}</h4>
-              <p></p>
+              <div class="info">
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              width="42px" height="32px" viewBox="0 0 42 32" enable-background="new 0 0 42 32" xml:space="preserve">
+              <defs>
+                <linearGradient id="rp-gradient" gradientTransform="rotate(60)">
+                  <stop offset="0%" stop-color="#d11d29"></stop>
+                  <stop offset="100%" stop-color="#542437"></stop>
+                </linearGradient>
+              </defs>
+              <g>
+                <path d="M33.958,12.982C33.528,6.372,28.931,0,20.5,0c-1.029,0-2.044,0.1-3.018,0.297
+                c-0.271,0.055-0.445,0.318-0.391,0.59c0.055,0.271,0.314,0.445,0.59,0.391C18.589,1.093,19.538,1,20.5,1C29.088,1,33,7.739,33,14
+                v1.5c0,0.276,0.224,0.5,0.5,0.5s0.5-0.224,0.5-0.5V14c0-0.005-0.001-0.011-0.001-0.016C37.062,14.248,41,16.916,41,22.5
+                c0,4.767-3.514,8.5-8,8.5H9c-3.976,0-8-2.92-8-8.5C1,18.406,3.504,14,9,14h1.5c0.276,0,0.5-0.224,0.5-0.5S10.776,13,10.5,13H9v-2
+                c0-3.727,2.299-6.042,6-6.042c3.364,0,6,2.654,6,6.042v12.993l-4.16-3.86c-0.2-0.188-0.517-0.177-0.706,0.026
+                c-0.188,0.202-0.177,0.519,0.026,0.706l4.516,4.189c0.299,0.298,0.563,0.445,0.827,0.445c0.261,0,0.52-0.145,0.808-0.433
+                l4.529-4.202c0.203-0.188,0.215-0.504,0.026-0.706c-0.188-0.204-0.506-0.215-0.706-0.026L22,23.993V11c0-3.949-3.075-7.042-7-7.042
+                c-4.252,0-7,2.764-7,7.042v2.051c-5.255,0.508-8,5.003-8,9.449C0,27.105,3.154,32,9,32h24c5.047,0,9-4.173,9-9.5
+                C42,16.196,37.443,13.222,33.958,12.982z"/>
+              </g>
+            </svg>
+              <p>Download</p>
+              </div>
             </li>
           </div>
         </ul>
@@ -175,12 +196,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #ddd5bf;
-  margin-top: 60px;
 
   width: 100%;
   max-width: 940px;
 
-  margin: 0 auto;
+  margin: 20px auto 40px;
 }
 
 .hidden {
@@ -192,6 +212,8 @@ export default {
 .server {
   width: 100%;
 }
+
+
 
 .server-info {
   position: fixed;
@@ -235,6 +257,71 @@ h3 {
 
   &:hover {
     box-shadow: 0 3px 6px 0 rgba(0,0,0,0.23);
+  }
+
+  &:hover, &:active {
+    
+    h2 {
+      transform: translateY(-3px);
+    }
+
+    .block {
+      top: 0%;
+      left: 50%;
+    }
+  }
+}
+
+.software-card {
+
+  position: relative;
+
+  svg {
+    
+    fill: url(#rp-gradient);
+  }
+
+  .info {
+    position: absolute;
+    right: 40px;
+    top: 30%;
+
+    display: flex;
+    justify-content: row-end;
+    align-items: center;
+  }
+
+  p {
+    color: #000;
+
+    margin-left: 20px;
+    transition: 0.3s color ease;
+  }
+
+  lineargradient {
+    stop {
+      stop-color: #000;
+      transition: 0.2s stop-color ease;
+    }
+
+    stop:last-of-type {
+      transition-delay: 0s;
+    }
+  }
+}
+
+.software-card:hover {
+  p {
+    color: #f6c435; 
+  }
+
+  lineargradient {
+    stop:first-of-type {
+      stop-color: #3a5255;
+    }
+    stop:last-of-type {
+      stop-color: #f6c435;
+    }
   }
 }
 </style>

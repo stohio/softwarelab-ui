@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  	<h1 class="logo">The Software Lab</h1>
+  	<h1 class="logo"><span>Go</span> <span>Go</span> <span>Software</span></h1>
   	<bundle-list v-on:changeBundle="changeBundle" :openTab="openTab"></bundle-list>
     <software-list v-on:changeBundle="changeBundle" :openTab="openTab"></software-list>
   </div>
@@ -14,7 +14,7 @@
   $orange: #e16622;
   $red: #d11d29;
   $purple: #542437;
-  $blue: #3a5255;
+  $blue: #4B75BD;
 
   * {
     margin: 0;
@@ -63,12 +63,26 @@
 
   .logo {
   	position: absolute;
-  	top: 0;
-  	right: 0;
+  	top: 20px;
+  	right: 20px;
   	width: 100%;
   	text-align: right;
   	padding-right: 20px;
   	color: #222;
+  	font-size: 2rem;
+
+  	span:first-of-type {
+  		color: $blue;
+  	}
+  	span:nth-of-type(2) {
+  		color: $blue;
+  	}
+  	span:nth-of-type(3) {
+  		color: $orange;
+  	}
+  	span:nth-of-type(4) {
+  		color: $blue;
+  	}
   }
 
   .big-input {
