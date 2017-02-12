@@ -44,7 +44,7 @@ export default {
       expandList: false,
       server: {
         name: "Brick Hack",
-        ip: "192.168.1.10",
+        ip: "",
         software: [{"clean_name": "Android Studio", "id" : 1, "name": "android-studio-ide-145.3360264-linux.zip"}, {"clean_name": "JRE 1.8", "id":2 ,"name": "jre-8u121-linux-i586.tar.gz"} , {"clean_name": "Postman", "id":3 ,"name":"Postman-linux-x64-4.9.3.tar.gz"} , {"clean_name": "AuthPy", "id":4 ,"name":"authy-authy-python-f085687.zip"} , {"clean_name": "MonoDevelop", "id":5 ,"name":"monodevelop-6.1.2.44-1.flatpak"} , {"clean_name": "SimpleSMS", "id":6,"name":"simpleSMS-master.zip"} , {"clean_name": "Ngrok x64", "id":7 ,"name":"ngrok-stable-linux-amd64.zip"} , {"clean_name": "Java OCR", "id":8 ,"name":"javaocr-20100605.zip"} , {"clean_name": "JDK 1.8", "id":9 ,"name":"jdk-8u121-linux-i586.tar.gz"}, {"clean_name": "Android Bundle", "id":10 ,"name":"android_bundle.zip"}]
       },
       bundles: {
@@ -60,7 +60,7 @@ export default {
 
 
   mounted () {
-    this.fetchServerList();
+
   },
   methods: {
     fetchServerList () {
@@ -69,8 +69,11 @@ export default {
         xhr.open('GET', "http://" + this.apiUrl + "/get_ip");
         xhr.onload = function() {
           self.server.ip = xhr.responseText;
+          console.log("ip",xhr.responseText)
         }
         xhr.send();
+
+
     },
 
     fetchAppList () {
@@ -131,6 +134,7 @@ export default {
 
     downloadFile(software) {
       console.log("download", software);
+      this.fetchServerList();
 
       var xhr = new XMLHttpRequest();
         var self = this;
