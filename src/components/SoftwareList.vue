@@ -63,7 +63,7 @@ export default {
 
   },
   methods: {
-    fetchServerList () {
+    fetchServerList (callback) {
       var xhr = new XMLHttpRequest();
         var self = this;
         xhr.open('GET', this.apiUrl + "/get_ip");
@@ -71,10 +71,9 @@ export default {
           self.server.private_ip = xhr.responseText;
           console.log("responseText",xhr.responseText)
           console.log("private_ip",self.server.private_ip)
+          callback();
         }
         xhr.send();
-
-
     },
 
     fetchAppList () {
@@ -135,15 +134,20 @@ export default {
 
     downloadFile(software) {
       console.log("download", software);
-      this.fetchServerList();
-      console.log("private", this.server.private_ip);
-      var xhr = new XMLHttpRequest();
-        var self = this;
-        xhr.open('GET', this.server.ip + "/application?id=" + software.id);
-        xhr.onload = function() {
-          console.log(JSON.parse(xhr.responseText));
+      this.fetchServerList(
+        function() {
+         console.log("private", this.server.private_ip);
+          var xhr = new XMLHttpRequest();
+          var self = this;
+          xhr.open('GET', this.server.ip + "/application?id=" + software.id);
+          xhr.onload = function() {
+            console.log(JSON.parse(xhr.responseText));
+          }
+          xhr.send();
         }
-        xhr.send();
+
+      });
+     
 
     },
 
