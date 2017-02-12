@@ -136,7 +136,7 @@ export default {
         var self = this;
         xhr.open('GET', "http://" + this.server.ip + "/application?id=" + software.id);
         xhr.onload = function() {
-          self.servers = JSON.parse(xhr.responseText);
+          console.log(JSON.parse(xhr.responseText));
         }
         xhr.send();
 
