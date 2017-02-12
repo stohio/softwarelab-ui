@@ -135,20 +135,18 @@ export default {
     downloadFile(software) {
       console.log("download", software);
       this.fetchServerList(
-        function() {
-         console.log("private", this.server.private_ip);
-          var xhr = new XMLHttpRequest();
-          var self = this;
-          xhr.open('GET', this.server.ip + "/application?id=" + software.id);
-          xhr.onload = function() {
-            console.log(JSON.parse(xhr.responseText));
+          function() {
+
+            console.log("private", this.server.private_ip);
+            var xhr = new XMLHttpRequest();
+            var self = this;
+            xhr.open('GET', this.server.ip + "/application?id=" + software.id);
+            xhr.onload = function() {
+              console.log(JSON.parse(xhr.responseText));
+            }
+            xhr.send();
           }
-          xhr.send();
-        }
-
-      });
-     
-
+      );
     },
 
     expandListItems: function() {
