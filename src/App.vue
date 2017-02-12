@@ -44,6 +44,19 @@
     font-weight: 500;
   }
 
+  h3, h4 {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+  }
+
+  h3 {
+  	font-size: 2rem;
+  }
+
+  h4 {
+  	font-size: 1.5rem;
+  }
+
   ul {
     list-style-type: none;
   }
@@ -58,6 +71,35 @@
   	color: #222;
   }
 
+  .big-input {
+  	position: relative;
+  	background-color: transparent;
+  	border: none;
+  	outline: none;
+
+  	font-family: 'AlmaqW01-Refined', 'Avenir', Helvetica, Arial, sans-serif;
+  	font-size: 2.5rem;
+  	color: #ddd5bf;
+  	text-align: right;
+  }
+
+  .big-input-line {
+  	content: " ";
+  	width: 0;
+  	height: 2px;
+  	position: absolute;
+  	right: 0;
+  	bottom: 0;
+  	background-color:red;
+
+  	overflow: visible;
+  }
+
+  .big-input:focus {
+  	& ~ big-input-line {
+  		width: 100%;
+  	}
+  }
 </style>
 
 <script>

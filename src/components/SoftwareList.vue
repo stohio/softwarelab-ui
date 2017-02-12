@@ -1,24 +1,33 @@
 <template>
 
   <div id="list-container">
-    <ul class="server-list">
+    <ul 
+    class="server-list">
       <li v-for="server in servers" class="server">
-        <h2>{{ server.name }} Server</h2>
-        <p>{{ server.private_ip }}</p>
-        <input type="text" placeholder="Search..." class="big-text">
-        <h3>Available Software</h3>
+        <div class="flex-container">
+          <h3>Available Software {{ searchString }}</h3>
+          <input v-model="searchString" type="text" placeholder="Search..." class="big-input"><span class="big-input-line"></span>
+        </div>
         <ul class="software-list">
-          <a href="#" v-for="software in server.software">
+          <a href="#" v-for="software in searchFilter(server.software)">
             <li class="software-card">
               <img src=""/>
-              <h1>{{ software.clean_name }}</h1>
+              <h4>{{ software.clean_name }}</h4>
               <p></p>
             </li>
           </a>
         </ul>
+        <div class="server-info">
+          <h2>{{ server.name }} Server</h2>
+          <p>{{ server.private_ip }}</p>
+        </div>
       </li>
     </ul>
-    
+    <div class="bundle-card see-all">
+        <div class="block"></div>
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000"><g><path d="M 23.706,15.312L 17.788,8.622c-0.392-0.392-1.030-0.392-1.422,0s-0.392,1.030,0,1.422l 5.3,5.992l-5.3,5.992 c-0.392,0.392-0.392,1.030,0,1.422s 1.030,0.392, 1.422,0l 5.918-6.69c 0.2-0.2, 0.296-0.462, 0.292-0.724 C 24,15.774, 23.906,15.512, 23.706,15.312zM 9.192,23.452c 0.392,0.392, 1.030,0.392, 1.422,0l 5.918-6.69c 0.2-0.2, 0.296-0.462, 0.292-0.724 c 0.004-0.262-0.092-0.526-0.292-0.724L 10.616,8.622c-0.392-0.392-1.030-0.392-1.422,0s-0.392,1.030,0,1.422l 5.3,5.992l-5.3,5.992 C 8.8,22.422, 8.8,23.060, 9.192,23.452z"></path></g></svg>
+        <h2>See All Software</h2>
+    </div>
 
   </div>
 </template>
@@ -29,6 +38,8 @@ export default {
   data () {
     return {
       apiUrl:  "http://10.2.0.252:8080",
+      searchString: '',
+      showSoftwareList: false,
       servers: [{
         name: "Brick Hack",
         private_ip: "192.168.1.10",
@@ -49,7 +60,33 @@ export default {
           self.servers = JSON.parse(xhr.responseText);
         }
         xhr.send();
-    }
+    },
+
+    searchFilter(software) {
+      var self = this;
+      return software.filter(function (software) {
+        if (self.searchString === '') {
+          console.log("empty");
+          return software;
+        }
+        
+        var searchParams = self.searchString.split(' ');
+
+        for (var i = 0; i < searchParams.length; i++) {
+          console.log(searchParams[i], software);
+          if (software.clean_name.toLowerCase().includes(searchParams[i].toLowerCase()) ) {
+            return software;
+          } else if ( software.name.toLowerCase().includes(searchParams[i].toLowerCase()) ) {
+            return software;
+          } else {
+            
+          }
+        }
+
+        return 0;
+      })
+    },
+
 
   }
 
@@ -70,8 +107,36 @@ export default {
   margin: 0 auto;
 }
 
+.server-list.hidden {
+  max-height: 0px;
+  overflow: hidden;
+  opacity: 0;
+}
+
 .server {
   width: 100%;
+}
+
+.server-info {
+  position: fixed;
+  bottom: 0;
+  right: -20px;
+  opacity: 0.5;
+  transform: scale(0.6);
+  text-align: right;
+}
+
+h3 {
+  margin-bottom: 20px;
+  text-align: left;
+  display: inline-block;
+}
+
+.flex-container {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .software-card {
@@ -83,7 +148,7 @@ export default {
   text-align: left;
 
   padding: 20px 40px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 
   border-radius: 5px;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.16);

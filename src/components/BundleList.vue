@@ -101,12 +101,6 @@
         </svg>
         <h2>Operating Systems</h2>
       </li>
-
-      <li class="bundle-card see-all">
-        <div class="block"></div>
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000"><g><path d="M 23.706,15.312L 17.788,8.622c-0.392-0.392-1.030-0.392-1.422,0s-0.392,1.030,0,1.422l 5.3,5.992l-5.3,5.992 c-0.392,0.392-0.392,1.030,0,1.422s 1.030,0.392, 1.422,0l 5.918-6.69c 0.2-0.2, 0.296-0.462, 0.292-0.724 C 24,15.774, 23.906,15.512, 23.706,15.312zM 9.192,23.452c 0.392,0.392, 1.030,0.392, 1.422,0l 5.918-6.69c 0.2-0.2, 0.296-0.462, 0.292-0.724 c 0.004-0.262-0.092-0.526-0.292-0.724L 10.616,8.622c-0.392-0.392-1.030-0.392-1.422,0s-0.392,1.030,0,1.422l 5.3,5.992l-5.3,5.992 C 8.8,22.422, 8.8,23.060, 9.192,23.452z"></path></g></svg>
-        <h2>See All Software</h2>
-      </li>
     </ul>
   </div>
 
@@ -128,14 +122,22 @@ export default {
   },
   methods: {
     toggleActive: function(name) {
-      this.openTab = name;
+      if (this.openTab === name) {
+        var el = document.querySelector('.active')
+        console.log(el);
+        el.classList.remove('active');
+        setTimeout(function () { this.openTab = '' }.bind(this), 600)
+
+      } else {
+        this.openTab = name;
+      }
     }
   }
 
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 #bundle-container {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -146,14 +148,14 @@ export default {
   max-width: 940px;
 
   margin: 0 auto;
-  margin-top: 60px;
+  margin-top: 40px;
 
   h1 {
     text-align: left;
   }
 
   ul {
-    margin-top: 10px;
+    margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -198,13 +200,15 @@ export default {
 .bundle-card.active {
   width: 100%;
 
+  transition: 0.5s width ease 0.6s;
+
 }
 
 .bundle-card.hidden {
   animation: 0.8s hide-card ease;
-  animation-fill-mode: forwards;
- 
+  animation-fill-mode: both;
 }
+
 
 @keyframes hide-card {
   0% {
@@ -251,7 +255,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.16);
 
-  transition: 0.5s width ease 0.6s, 0.3s opacity ease;
+  transition: 0.5s width ease, 0.3s opacity ease, 0.3s max-height ease, 0.3s height ease, 0.3s min-height ease, 0.3s max-width ease,;
 
   &:hover, &.active {
     
