@@ -218,7 +218,7 @@ export default {
 }
 
 .bundle-card.hidden {
-  animation: 0.5ss hide-card linear;
+  animation: 0.5s hide-card linear;
   animation-fill-mode: both;
 
   flex-shrink: 1;
