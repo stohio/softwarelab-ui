@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-  	<h1 class="logo"><span>Go</span> <span>Go</span> <span>Software</span></h1>
-  	<bundle-list v-on:changeBundle="changeBundle" :openTab="openTab"></bundle-list>
-    <software-list v-on:changeBundle="changeBundle" :openTab="openTab"></software-list>
+  	<h1 class="logo" style="margin-bottom:"><span>Software</span> <span>Lab</span></h1>
+      <software-list v-on:changeBundle="changeBundle" :openTab="openTab"></software-list>
   </div>
 </template>
 
 <style lang="scss">
-  @import url(//db.onlinewebfonts.com/c/9126c154a82d08fe6124045ce0fc61d9?family=AlmaqW01-Refined);
+  @import url(https://db.onlinewebfonts.com/c/9126c154a82d08fe6124045ce0fc61d9?family=AlmaqW01-Refined);
 
   $gray: #1e262c;
   $yellow: #f6c435;
@@ -40,7 +39,7 @@
   }
 
   h1, h2 {
-    font-family: 'AlmaqW01-Refined', 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'https://db.onlinewebfonts.com/c/9126c154a82d08fe6124045ce0fc61d9?family=AlmaqW01-Refined', 'Avenir', Helvetica, Arial, sans-serif;
     font-weight: 500;
   }
 
@@ -91,7 +90,7 @@
   	border: none;
   	outline: none;
 
-  	font-family: 'AlmaqW01-Refined', 'Avenir', Helvetica, Arial, sans-serif;
+  	font-family: 'https://db.onlinewebfonts.com/c/9126c154a82d08fe6124045ce0fc61d9?family=AlmaqW01-Refined', 'Avenir', Helvetica, Arial, sans-serif;
   	font-size: 2.5rem;
   	color: #ddd5bf;
   	text-align: right;

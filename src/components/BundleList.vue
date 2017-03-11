@@ -6,7 +6,7 @@
       <li 
         v-on:click="toggleActive('mobile')"
         v-bind:class="{active: (openTab === 'mobile'), hidden: (openTab != '' && openTab != 'mobile')}"
-        class="bundle-card rp-gradient">
+        class="bundle-card left rp-gradient">
         <div class="block"></div>
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
@@ -33,7 +33,7 @@
       <li 
       v-on:click="toggleActive('java')"
         v-bind:class="{active: (openTab === 'java'), hidden: (openTab != '' && openTab != 'java')}"
-      class="bundle-card oy-gradient">
+      class="bundle-card right oy-gradient">
         <div class="block"></div>
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32.02199935913086" height="32" viewBox="0 0 32.02199935913086 32" enable-background="new 0 0 16 16" xml:space="preserve" fill="#000000">
         <defs>
@@ -49,7 +49,7 @@
       <li 
       v-on:click="toggleActive('games')"
         v-bind:class="{ active: (openTab === 'games'), hidden: (openTab != '' && openTab != 'games')}"
-        class="bundle-card by-gradient">
+        class="bundle-card left by-gradient">
         <div class="block"></div>
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         width="34px" height="32px" viewBox="0 0 34 32" enable-background="new 0 0 34 32" xml:space="preserve">
@@ -79,7 +79,7 @@
 
       <li v-on:click="toggleActive('os')"
         v-bind:class="{active: (openTab === 'os'), hidden: (openTab != '' && openTab != 'os')}"
-        class="bundle-card pb-gradient">
+        class="bundle-card right pb-gradient">
         <div class="block"></div>
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         width="39px" height="32px" viewBox="0 0 39 32" enable-background="new 0 0 39 32" xml:space="preserve">
@@ -215,6 +215,8 @@ export default {
   //transition: 1s width ease 4s;
   flex-grow: 1;
   transition: 0.5s flex-grow ease 0.5s, 0.5s width ease 0.5s;
+  margin: 0%;
+  margin-bottom: 1%;
 }
 
 .bundle-card.hidden {
@@ -229,13 +231,11 @@ export default {
   transition: 0.5s max-height ease 0.5s, 0.5s height ease 0.5s, 0.5s min-height ease 0.5s, max-width ease;
 }
 
-
 @keyframes hide-card {
   0% {
     opacity: 1;
     max-height: 100%;
   }
-
 
   50% {
     opacity: 0;
@@ -286,8 +286,14 @@ export default {
   border-radius: 5px;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.16);
 
-  transition: 0.5s max-height ease 0.5s, 0.5s height ease 0.5s, 0.5s min-height ease 0.5s, max-width ease;
+  transition: 0.5s max-height ease 0.5s, 0.5s height ease 0.5s, 0.5s min-height ease 0.5s, max-width ease 0.5s;
 
+    &.left{
+        margin-right: 0%;
+    }
+    &.right{
+        margin-left: 0%;
+    }
   &:hover, &.active {
     
     h2 {
@@ -303,7 +309,6 @@ export default {
       }
     }
   }
-
 
   &.rp-gradient {
 

@@ -4,14 +4,14 @@
     <ul 
     class="server-list">
       <li class="server">
-        <div class="flex-container" v-bind:class="{hidden: expandList === false}">
-          <h3>Available Software</h3>
-          <input v-model="searchString" type="text" placeholder="Search..." class="big-input"><span class="big-input-line"></span>
+        <div class="flex-container" v-bind:class="{hidden: expandList === false}" style="margin:auto">
+          <h3 style="margin:auto">Available Software to Build With</h3>
+          <input v-model="searchString" type="text" placeholder="Search..." class="big-input" style="margin-bottom:20px"><span class="big-input-line"></span>
         </div>
         <ul class="software-list" v-bind:class="{hidden: expandList === false}">
-          <div v-for="software in bundleFilter(searchFilter(server.software))" v-on:click="downloadFile(software)">
+          <div v-for="software in searchFilter(server.softwares)" v-on:click="downloadFile(software)">
             <li class="software-card">
-              <h4>{{ software.clean_name }}</h4>
+              <h4>{{ software.name }} - {{ software.os }}</h4>
               <div class="info">
               <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               width="42px" height="32px" viewBox="0 0 42 32" enable-background="new 0 0 42 32" xml:space="preserve">
@@ -38,10 +38,6 @@
             </li>
           </div>
         </ul>
-        <div class="server-info">
-          <h2>{{ server.name }} Server</h2>
-          <p>{{ server.ip }}</p>
-        </div>
       </li>
     </ul>
     <div class="bundle-card see-all"
@@ -60,28 +56,19 @@ export default {
   name: 'software-list',
   data () {
     return {
-      apiUrl:  "http://40.71.25.155:8080",
+      apiUrl:  "http://stoh.io/swl/networks",
       searchString: '',
       expandList: false,
+        
       server: {
-        name: "Brick Hack",
-        private_ip: "",
-        software: [{"clean_name": "Android Studio", "id" : 1, "name": "android-studio-ide-145.3360264-linux.zip"}, {"clean_name": "JRE 1.8", "id":2 ,"name": "jre-8u121-linux-i586.tar.gz"} , {"clean_name": "Postman", "id":3 ,"name":"Postman-linux-x64-4.9.3.tar.gz"} , {"clean_name": "AuthPy", "id":4 ,"name":"authy-authy-python-f085687.zip"} , {"clean_name": "MonoDevelop", "id":5 ,"name":"monodevelop-6.1.2.44-1.flatpak"} , {"clean_name": "SimpleSMS", "id":6,"name":"simpleSMS-master.zip"} , {"clean_name": "Ngrok x64", "id":7 ,"name":"ngrok-stable-linux-amd64.zip"} , {"clean_name": "Java OCR", "id":8 ,"name":"javaocr-20100605.zip"} , {"clean_name": "JDK 1.8", "id":9 ,"name":"jdk-8u121-linux-i586.tar.gz"}, {"clean_name": "Android Bundle", "id":10 ,"name":"android_bundle.zip"}]
-      },
-      bundles: {
-          "mobile": [1, 9, 10],
-          "java": [2, 8, 9],
-          "games": [5],
-          "os": [3, 4, 7]
-        }
+      },    
     }
   },
 
   props: ['openTab'],
 
-
-  mounted () {
-
+  beforeMount () {
+      this.fetchServerList();
   },
 
   watch: {
@@ -91,88 +78,100 @@ export default {
   },
 
   methods: {
-    fetchServerList (callback) {
+    fetchServerList () {
       var xhr = new XMLHttpRequest();
-        var self = this;
-        xhr.open('GET', this.apiUrl + "/get_ip");
-        xhr.onload = function() {
+      var self = this;
+      xhr.open('GET', this.apiUrl);
+      xhr.onload = function() {
           self.server.private_ip = xhr.responseText;
-          console.log("responseText",xhr.responseText)
-          console.log("private_ip",self.server.private_ip)
-          callback();
+          console.log(xhr.responseText);
+          var response = JSON.parse(xhr.responseText);
+          self.server = response[0];
+          self.server.softwares = [];
+          
+          for(var i = 0; i<self.server.stack.softwares.length; i++){
+              console.log(self.server.stack.softwares[i]);
+              for(var j = 0; j<self.server.stack.softwares[i].versions.length; j++){
+                  self.server.softwares.push({
+                    name: self.server.stack.softwares[i].name,
+                    os:   self.server.stack.softwares[i].versions[j].os,
+                      softid: self.server.stack.softwares[i].id,
+                      verid: self.server.stack.softwares[i].versions[j].id,
+                      architecture: self.server.stack.softwares[i].versions[j].architecture
+                      
+                  });
+                  console.log(self.server.softwares[i].name);
+              }
+          }
+            console.log(self.server.softwares);
+            console.log("index 1: ", self.server);
         }
+        
         xhr.send();
     },
-
-    fetchAppList () {
-      var xhr = new XMLHttpRequest();
-        var self = this;
-        xhr.open('GET', this.apiUrl + "/apps");
-        xhr.onload = function() {
-          self.server.software = JSON.parse(xhr.responseText);
-        }
-        xhr.send();
-    },
-
+      
     searchFilter(software) {
       var self = this;
       return software.filter(function (software) {
 
-        if (self.searchString === '') {
-          console.log("empty");
+        if (self.searchString === '')
           return software;
-        }
+        
         
         var searchParams = self.searchString.split(' ');
 
-        for (var i = 0; i < searchParams.length; i++) {
-          console.log(searchParams[i], software);
-          if (software.clean_name.toLowerCase().includes(searchParams[i].toLowerCase()) ) {
+        for (var i = 0; i < searchParams.length; i++) 
+          if (software.name.toLowerCase().includes(searchParams[i].toLowerCase())) 
             return software;
-          } else if ( software.name.toLowerCase().includes(searchParams[i].toLowerCase()) ) {
-            return software;
-          } else {
-            
-          }
-        }
-
+          
         return 0;
       })
     },
 
-    bundleFilter(software) {
-      var self = this;
-
-      return software.filter(function (software) {
-
-        if (self.openTab != '') {
-          console.log(self.bundles[self.openTab], software.id);
-        
-          for (var i = 0; i < self.bundles[self.openTab].length; i ++) {
-            if ( self.bundles[self.openTab][i] === software.id ) {
-              return software;
-            }
-          }
-        } else {
-          return software;
-        }
-
-      })
-    }, 
+      
+//Bundles not currently being      
+//    bundleFilter(software) {
+//      var self = this;
+//
+//      return software.filter(function (software) {
+//
+//        if (self.openTab != '') {
+//            
+//          for (var i = 0; i < self.bundles[self.openTab].length; i ++) {
+//            if ( self.bundles[self.openTab][i] === software.id ) {
+//              return software;
+//            }
+//          }
+//        } else {
+//          return software;
+//        }
+//
+//      })
+//    }, 
 
     downloadFile(software) {
-      console.log("download", software);
       var self = this;
-      var mySoft = software;
-      this.fetchServerList(
-          function() {
-
-            console.log("private self", self, "private this", this);
-              
-            window.location.href = "http://"+ self.server.private_ip + ":8080/application?id=" + mySoft.id;
-
-          }
-      );
+      var softid = software.softid;
+      var verid = software.verid;
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', "http://stoh.io/swl/software/" + softid + "/versions/" + verid);
+      xhr.onload = function() {
+          //parse response into JSON and get response.ip
+          var response = JSON.parse(xhr.responseText);
+          var ip = response.ip;
+          console.log("ip: " + ip);
+          if(ip != "undefined")
+            window.location.href("http://" + ip + "/download/software/" + softid + "/versions/" + verid);
+    
+          
+      //xhr.open('GET', "http://" + ip + "/download/software/" + softid + "/versions/" + verid);
+      //xhr.onload = function() {
+          //this should just download it right cam i don't need to put anything here. 
+      //}
+      //xhr.send();
+        }
+      xhr.send();
+          //request to new url which download software
     },
 
     expandListItems: function() {
@@ -183,10 +182,7 @@ export default {
     dontShowAll: function() {
       this.expandList = false;
     }
-
-
   }
-
 }
 </script>
 
@@ -212,8 +208,6 @@ export default {
 .server {
   width: 100%;
 }
-
-
 
 .server-info {
   position: fixed;
